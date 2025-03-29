@@ -1,57 +1,33 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Container
+﻿namespace Container
 {
     public class Container
     {
-        List<int> container = new List<int>();
-        public int maxLength = 5;
+        private readonly List<int> _container = new(capacity: 5);
 
-        public void TryAdd(int value)
+        public int MaxLength { get; } = 5;
+
+        public bool TryAdd(int value)
         {
-            if (container.Count < maxLength+1)
+            if (_container.Count == MaxLength)
             {
-                container.Add(value);
+                return false;
             }
-            else
-            {
-                Console.WriteLine("Operation not possible.");
-            }
+
+            _container.Add(value);
+
+            return true;
         }
 
         public void ForceAdd(int value)
         {
+            if (_container.Count == MaxLength)
+            {
+                _container.RemoveAt(0);
+            }
+
             TryAdd(value);
-            if (container.Count > maxLength)
-            {
-                container.RemoveAt(0);
-                container.Add(value);
-            }
         }
 
-        public void GetAll()
-        {
-            for (int i = 0; i < container.Count; i++) 
-            {
-                Console.WriteLine(container[i]);
-            }
-        }
-
-        class Program
-        {
-            static void Main()
-            {
-                var numberContainer = new Container();
-                numberContainer.TryAdd(1);
-                numberContainer.TryAdd(2);
-                numberContainer.TryAdd(3);
-                numberContainer.TryAdd(4);
-                numberContainer.TryAdd(5);
-                numberContainer.TryAdd(6);
-                numberContainer.ForceAdd(99);
-                numberContainer.GetAll();
-                
-            }
-        }
+        public int[] GetAll() => _container.ToArray();
     }
 }
