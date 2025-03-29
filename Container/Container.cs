@@ -1,12 +1,12 @@
 ﻿namespace Container
 {
-    public class Container
+    public class Container<T>
     {
-        private readonly List<int> _container = new(capacity: 5);
+        private readonly List<T> _container = new(capacity: 5);
 
         public int MaxLength { get; } = 5;
 
-        public bool TryAdd(int value)
+        public bool TryAdd(T value)
         {
             if (_container.Count == MaxLength)
             {
@@ -18,7 +18,7 @@
             return true;
         }
 
-        public void ForceAdd(int value)
+        public void ForceAdd(T value)
         {
             if (_container.Count == MaxLength)
             {
@@ -28,6 +28,6 @@
             TryAdd(value);
         }
 
-        public int[] GetAll() => _container.ToArray();
+        public T[] GetAll() => _container.ToArray();
     }
 }

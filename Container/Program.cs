@@ -1,12 +1,14 @@
-var numberContainer = new Container.Container();
+using Container;
 
-int[] numbersToTry = [1, 2, 3, 4, 5, 6];
+var numberContainer = new Container<int>();
+
+int[] numbersToTry = [ 1, 2, 3, 4, 5, 6 ];
 
 foreach (var number in numbersToTry)
 {
     if (numberContainer.TryAdd(number))
     {
-        Console.WriteLine($"Successfuly added {number}");
+        Console.WriteLine($"Successfully added {number}");
     }
     else
     {
@@ -14,7 +16,7 @@ foreach (var number in numbersToTry)
     }
 }
 
-Console.WriteLine("Adding 99 focefully");
+Console.WriteLine("Adding 99 forcefully");
 numberContainer.ForceAdd(99);
 
 Console.WriteLine($"All numbers in the container: {string.Join(',', numberContainer.GetAll())}");
