@@ -1,5 +1,5 @@
-﻿namespace Container
-{
+﻿namespace ContainerLibrary;
+
     public class Container<T>
     {
         private readonly List<T> _container = new(capacity: 5);
@@ -30,4 +30,3 @@
 
         public T[] GetAll() => _container.ToArray();
     }
-}
