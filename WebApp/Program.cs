@@ -1,4 +1,4 @@
-using ContainerLibrary;
+using ContainerLibrary.Container;
 
 namespace WebApp
 {
@@ -9,12 +9,14 @@ namespace WebApp
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSingleton<IContainer<int>, Container<int>>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<ContainerLibrary.Container<int>>();
+          
+            builder.Services.AddSingleton<ContainerLibrary.Container.Container<int>>();
 
             var app = builder.Build();
 
