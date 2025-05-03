@@ -15,6 +15,7 @@ namespace WebApp
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+          
             builder.Services.AddSingleton<ContainerLibrary.Container.Container<int>>();
 
             var app = builder.Build();
