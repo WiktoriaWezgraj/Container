@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ContainerLibrary;
 
 namespace WebApp.Controllers
 {
@@ -7,16 +8,24 @@ namespace WebApp.Controllers
     [ApiController]
     public class ContainerController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
+        private readonly Container<int> _container;
+        public ContainerController(Container<int> containerController) 
         {
-            return Ok();
+            _container = containerController;
+        }
+        
+        [HttpGet]
+        public ActionResult<ContainerResponse> Get()
+        {
+            var content = _container.GetAll();
+            return Ok(new ContainerResponse { Content = content, Count = content.Length });
         }
 
         [HttpPut]
-        public IActionResult Put()
+        public ActionResult<AddItemRequest> Put([FromBody] AddItemRequest item)
         {
-            return Ok();
+            _container.TryAdd(item.Item);
+            return Ok(new AddItemRequest { Item = item.Item});
         }
     }
 }
