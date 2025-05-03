@@ -2,38 +2,38 @@
 using Microsoft.AspNetCore.Mvc;
 using ContainerLibrary.Container;
 
+
 namespace WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ContainerController : ControllerBase
     {
-        private readonly IContainer<int> _container;
-
-        public ContainerController(IContainer<int> container)
+        private readonly Container<int> _container;
+        public ContainerController(Container<int> containerController)
         {
-            _container = container;
+            _container = containerController;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult<ContainerResponse> Get()
         {
-            return Ok();
+            var content = _container.GetAll();
+            return Ok(new ContainerResponse { Content = content, Count = content.Length });
         }
 
         [HttpPut]
-        public IActionResult Put([FromQuery] bool forceAdd, [FromQuery] int value)
+        public ActionResult<AddItemRequest> Put([FromBody] AddItemRequest item, [FromQuery] bool forceAdd)
         {
             if (forceAdd)
             {
-                _container.ForceAdd(value);
+                _container.ForceAdd(item.Item);
             }
             else
             {
-                _container.TryAdd(value);
+                _container.TryAdd(item.Item);
             }
-
-            return Ok();
+            return Ok(new AddItemRequest { Item = item.Item });
         }
 
     }
